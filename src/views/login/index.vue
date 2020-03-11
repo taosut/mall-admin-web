@@ -9,13 +9,13 @@
         <div style="text-align: center">
           <svg-icon icon-class="login-mall" style="width: 56px;height: 56px;color: #409EFF"></svg-icon>
         </div>
-        <h2 class="login-title color-main">mall-admin-web</h2>
+        <h2 class="login-title color-main">mall admin web</h2>
         <el-form-item prop="username">
           <el-input name="username"
                     type="text"
                     v-model="loginForm.username"
                     autoComplete="on"
-                    placeholder="请输入用户名">
+                    placeholder="Please enter user name">
           <span slot="prefix">
             <svg-icon icon-class="user" class="color-main"></svg-icon>
           </span>
@@ -27,7 +27,7 @@
                     @keyup.enter.native="handleLogin"
                     v-model="loginForm.password"
                     autoComplete="on"
-                    placeholder="请输入密码">
+                    placeholder="Please enter the password">
           <span slot="prefix">
             <svg-icon icon-class="password" class="color-main"></svg-icon>
           </span>
@@ -38,16 +38,16 @@
         </el-form-item>
         <el-form-item style="margin-bottom: 60px;text-align: center">
           <el-button style="width: 45%" type="primary" :loading="loading" @click.native.prevent="handleLogin">
-            登录
+            Log in
           </el-button>
-          <el-button style="width: 45%" type="primary" @click.native.prevent="handleTry">
-            获取体验账号
-          </el-button>
+          <!-- <el-button style="width: 45%" type="primary" @click.native.prevent="handleTry">
+            Get experience account
+          </el-button> -->
         </el-form-item>
       </el-form>
     </el-card>
     <img :src="login_center_bg" class="login-center-layout">
-    <el-dialog
+    <!-- <el-dialog
       title="公众号二维码"
       :visible.sync="dialogVisible"
       :show-close="false"
@@ -61,7 +61,7 @@
       <span slot="footer" class="dialog-footer">
     <el-button type="primary" @click="dialogConfirm">确定</el-button>
       </span>
-    </el-dialog>
+    </el-dialog> -->
   </div>
 </template>
 
@@ -75,14 +75,14 @@
     data() {
       const validateUsername = (rule, value, callback) => {
         if (!isvalidUsername(value)) {
-          callback(new Error('请输入正确的用户名'))
+          callback(new Error('Please enter the correct username'))
         } else {
           callback()
         }
       };
       const validatePass = (rule, value, callback) => {
         if (value.length < 3) {
-          callback(new Error('密码不能小于3位'))
+          callback(new Error('Password must be at least 3 characters'))
         } else {
           callback()
         }
@@ -139,7 +139,7 @@
               this.loading = false
             })
           } else {
-            console.log('参数验证不合法！');
+            console.log('Parameter verification is illegal!');
             return false
           }
         })

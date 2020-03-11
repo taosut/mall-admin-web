@@ -4,12 +4,12 @@
              :rules="rules"
              ref="productCateFrom"
              label-width="150px">
-      <el-form-item label="分类名称：" prop="name">
+      <el-form-item label="Category Name: " prop="name">
         <el-input v-model="productCate.name"></el-input>
       </el-form-item>
-      <el-form-item label="上级分类：">
+      <el-form-item label="Sub-headings: ">
         <el-select v-model="productCate.parentId"
-                   placeholder="请选择分类">
+                   placeholder="Please select a type">
           <el-option
             v-for="item in selectProductCateList"
             :key="item.id"
@@ -18,25 +18,25 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="数量单位：">
+      <el-form-item label="Quantity unit: ">
         <el-input v-model="productCate.productUnit"></el-input>
       </el-form-item>
-      <el-form-item label="排序：">
+      <el-form-item label="Sort by: ">
         <el-input v-model="productCate.sort"></el-input>
       </el-form-item>
-      <el-form-item label="是否显示：">
+      <el-form-item label="Whether to display: ">
         <el-radio-group v-model="productCate.showStatus">
-          <el-radio :label="1">是</el-radio>
-          <el-radio :label="0">否</el-radio>
+          <el-radio :label="1">Yes</el-radio>
+          <el-radio :label="0">No</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="是否显示在导航栏：">
+      <el-form-item label="Whether to display in the navigation bar: ">
         <el-radio-group v-model="productCate.navStatus">
-          <el-radio :label="1">是</el-radio>
-          <el-radio :label="0">否</el-radio>
+          <el-radio :label="1">Yes</el-radio>
+          <el-radio :label="0">No</el-radio>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="分类图标：">
+      <el-form-item label="Category icon: ">
         <single-upload v-model="productCate.icon"></single-upload>
       </el-form-item>
       <el-form-item v-for="(filterProductAttr, index) in filterProductAttrList"
@@ -48,20 +48,20 @@
           v-model="filterProductAttr.value"
           :options="filterAttrs">
         </el-cascader>
-        <el-button style="margin-left: 20px" @click.prevent="removeFilterAttr(filterProductAttr)">删除</el-button>
+        <el-button style="margin-left: 20px" @click.prevent="removeFilterAttr(filterProductAttr)">Delete</el-button>
       </el-form-item>
       <el-form-item>
-        <el-button size="small" type="primary" @click="handleAddFilterAttr()">新增</el-button>
+        <el-button size="small" type="primary" @click="handleAddFilterAttr()">Add</el-button>
       </el-form-item>
-      <el-form-item label="关键词：">
+      <el-form-item label="Key words: ">
         <el-input v-model="productCate.keywords"></el-input>
       </el-form-item>
-      <el-form-item label="分类描述：">
+      <el-form-item label="Category description: ">
         <el-input type="textarea" :autosize="true" v-model="productCate.description"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit('productCateFrom')">提交</el-button>
-        <el-button v-if="!isEdit" @click="resetForm('productCateFrom')">重置</el-button>
+        <el-button type="primary" @click="onSubmit('productCateFrom')">Submit</el-button>
+        <el-button v-if="!isEdit" @click="resetForm('productCateFrom')">Reset</el-button>
       </el-form-item>
     </el-form>
   </el-card>
@@ -100,8 +100,8 @@
         selectProductCateList: [],
         rules: {
           name: [
-            {required: true, message: '请输入品牌名称', trigger: 'blur'},
-            {min: 2, max: 140, message: '长度在 2 到 140 个字符', trigger: 'blur'}
+            {required: true, message: 'Please enter a brand name', trigger: 'blur'},
+            {min: 2, max: 140, message: '2 to 140 characters in length', trigger: 'blur'}
           ]
         },
         filterAttrs: [],
@@ -136,7 +136,7 @@
       getSelectProductCateList() {
         fetchList(0, {pageSize: 100, pageNum: 1}).then(response => {
           this.selectProductCateList = response.data.list;
-          this.selectProductCateList.unshift({id: 0, name: '无上级分类'});
+          this.selectProductCateList.unshift({id: 0, name: 'No superior classification'});
         });
       },
       getProductAttrCateList() {
@@ -158,7 +158,7 @@
         });
       },
       getProductAttributeIdList() {
-        //获取选中的筛选商品属性
+        //Get selected filtered product attributes
         let productAttributeIdList = [];
         for (let i = 0; i < this.filterProductAttrList.length; i++) {
           let item = this.filterProductAttrList[i];
@@ -171,16 +171,16 @@
       onSubmit(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.$confirm('是否提交数据', '提示', {
-              confirmButtonText: '确定',
-              cancelButtonText: '取消',
+            this.$confirm('Whether to submit data', 'prompt', {
+              confirmButtonText: 'Confirm',
+              cancelButtonText: 'Cancel',
               type: 'warning'
             }).then(() => {
               if (this.isEdit) {
                 this.productCate.productAttributeIdList = this.getProductAttributeIdList();
                 updateProductCate(this.$route.query.id, this.productCate).then(response => {
                   this.$message({
-                    message: '修改成功',
+                    message: 'Successfully modified',
                     type: 'success',
                     duration: 1000
                   });
@@ -192,7 +192,7 @@
                   this.$refs[formName].resetFields();
                   this.resetForm(formName);
                   this.$message({
-                    message: '提交成功',
+                    message: 'Submitted successfully',
                     type: 'success',
                     duration: 1000
                   });
@@ -202,7 +202,7 @@
 
           } else {
             this.$message({
-              message: '验证失败',
+              message: 'Verification failed',
               type: 'error',
               duration: 1000
             });
@@ -221,7 +221,7 @@
       removeFilterAttr(productAttributeId) {
         if (this.filterProductAttrList.length === 1) {
           this.$message({
-            message: '至少要留一个',
+            message: 'At least one',
             type: 'warning',
             duration: 1000
           });
@@ -235,7 +235,7 @@
       handleAddFilterAttr() {
         if (this.filterProductAttrList.length === 3) {
           this.$message({
-            message: '最多添加三个',
+            message: 'Add up to three',
             type: 'warning',
             duration: 1000
           });
@@ -250,7 +250,7 @@
     filters: {
       filterLabelFilter(index) {
         if (index === 0) {
-          return '筛选属性：';
+          return 'Filter attributes:';
         } else {
           return '';
         }

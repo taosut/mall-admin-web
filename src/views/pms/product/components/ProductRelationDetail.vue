@@ -5,31 +5,31 @@
              label-width="120px"
              style="width: 680px"
              size="small">
-      <el-form-item label="关联专题：">
+      <el-form-item label="Related topics: ">
         <el-transfer
           style="display: inline-block"
           filterable
           :filter-method="filterMethod"
-          filter-placeholder="请输入专题名称"
+          filter-placeholder="Please enter a topic name"
           v-model="selectSubject"
           :titles="subjectTitles"
           :data="subjectList">
         </el-transfer>
       </el-form-item>
-      <el-form-item label="关联优选：">
+      <el-form-item label="Association preference: ">
         <el-transfer
           style="display: inline-block"
           filterable
           :filter-method="filterMethod"
-          filter-placeholder="请输入优选名称"
+          filter-placeholder="Please enter a preferred name"
           v-model="selectPrefrenceArea"
           :titles="prefrenceAreaTitles"
           :data="prefrenceAreaList">
         </el-transfer>
       </el-form-item>
       <el-form-item style="text-align: center">
-        <el-button size="medium" @click="handlePrev">上一步，填写商品属性</el-button>
-        <el-button type="primary" size="medium" @click="handleFinishCommit">完成，提交商品</el-button>
+        <el-button size="medium" @click="handlePrev">Previous step, fill in product attributes</el-button>
+        <el-button type="primary" size="medium" @click="handleFinishCommit">Finish, submit product</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -50,14 +50,14 @@
     },
     data() {
       return {
-        //所有专题列表
+        //List of all topics
         subjectList: [],
-        //专题左右标题
-        subjectTitles: ['待选择', '已选择'],
-        //所有专题列表
+        //Topic left and right titles
+        subjectTitles: ['To be selected', 'chosen'],
+        //List of all topics
         prefrenceAreaList: [],
-        //专题左右标题
-        prefrenceAreaTitles: ['待选择', '已选择']
+        //Topic left and right titles
+        prefrenceAreaTitles: ['To be selected', 'chosen']
       };
     },
     created() {
@@ -65,7 +65,7 @@
       this.getPrefrenceAreaList();
     },
     computed:{
-      //选中的专题
+      //Selected topics
       selectSubject:{
         get:function () {
           let subjects =[];
@@ -84,7 +84,7 @@
           }
         }
       },
-      //选中的优选
+      //Selected preferences
       selectPrefrenceArea:{
         get:function () {
           let prefrenceAreas =[];

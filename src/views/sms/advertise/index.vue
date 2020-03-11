@@ -3,28 +3,28 @@
     <el-card class="filter-container" shadow="never">
       <div>
         <i class="el-icon-search"></i>
-        <span>筛选搜索</span>
+        <span>Filter search</span>
         <el-button
           style="float:right"
           type="primary"
           @click="handleSearchList()"
           size="small">
-          查询搜索
+          Query search
         </el-button>
         <el-button
           style="float:right;margin-right: 15px"
           @click="handleResetSearch()"
           size="small">
-          重置
+          Reset
         </el-button>
       </div>
       <div style="margin-top: 15px">
         <el-form :inline="true" :model="listQuery" size="small" label-width="140px">
-          <el-form-item label="广告名称：">
-            <el-input v-model="listQuery.name" class="input-width" placeholder="广告名称"></el-input>
+          <el-form-item label="Ad Name:">
+            <el-input v-model="listQuery.name" class="input-width" placeholder="Ad name"></el-input>
           </el-form-item>
-          <el-form-item label="广告位置：">
-            <el-select v-model="listQuery.type" placeholder="全部" clearable class="input-width">
+          <el-form-item label="Ad placement: ">
+            <el-select v-model="listQuery.type" placeholder="All" clearable class="input-width">
               <el-option v-for="item in typeOptions"
                          :key="item.value"
                          :label="item.label"
@@ -32,13 +32,13 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="到期时间：">
+          <el-form-item label="Expire date: ">
             <el-date-picker
               class="input-width"
               v-model="listQuery.endTime"
               value-format="yyyy-MM-dd"
               type="date"
-              placeholder="请选择时间">
+              placeholder="Please select a time">
             </el-date-picker>
           </el-form-item>
         </el-form>
@@ -46,8 +46,8 @@
     </el-card>
     <el-card class="operate-container" shadow="never">
       <i class="el-icon-tickets"></i>
-      <span>数据列表</span>
-      <el-button size="mini" class="btn-add" @click="handleAdd()">添加广告</el-button>
+      <span>Datasheets</span>
+      <el-button size="mini" class="btn-add" @click="handleAdd()">Add ads</el-button>
     </el-card>
     <div class="table-container">
       <el-table ref="homeAdvertiseTable"
@@ -56,7 +56,7 @@
                 @selection-change="handleSelectionChange"
                 v-loading="listLoading" border>
         <el-table-column type="selection" width="60" align="center"></el-table-column>
-        <el-table-column label="编号" width="120" align="center">
+        <el-table-column label="Number" width="120" align="center">
           <template slot-scope="scope">{{scope.row.id}}</template>
         </el-table-column>
         <el-table-column label="广告名称" align="center">

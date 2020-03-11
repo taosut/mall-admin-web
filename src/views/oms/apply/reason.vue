@@ -2,11 +2,11 @@
   <div class="app-container">
     <el-card class="operate-container" shadow="never">
       <i class="el-icon-tickets"></i>
-      <span>数据列表</span>
+      <span>Datasheets</span>
       <el-button
         size="mini"
         @click="handleAdd"
-        class="btn-add">添加
+        class="btn-add">Add
       </el-button>
     </el-card>
     <div class="table-container">
@@ -16,16 +16,16 @@
                 @selection-change="handleSelectionChange"
                 v-loading="listLoading" border>
         <el-table-column type="selection" width="60" align="center"></el-table-column>
-        <el-table-column label="编号" width="80" align="center">
+        <el-table-column label="Number" width="80" align="center">
           <template slot-scope="scope">{{scope.row.id}}</template>
         </el-table-column>
-        <el-table-column label="原因类型" align="center">
+        <el-table-column label="Cause type" align="center">
           <template slot-scope="scope">{{scope.row.name}}</template>
         </el-table-column>
-        <el-table-column label="排序" width="100" align="center">
+        <el-table-column label="Sort" width="100" align="center">
           <template slot-scope="scope">{{scope.row.sort }}</template>
         </el-table-column>
-        <el-table-column label="是否可用" align="center">
+        <el-table-column label="Tt's usable or not" align="center">
           <template slot-scope="scope">
             <el-switch
               v-model="scope.row.status"
@@ -35,17 +35,17 @@
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="添加时间" width="180" align="center">
+        <el-table-column label="Add time" width="180" align="center">
           <template slot-scope="scope">{{scope.row.createTime | formatCreateTime}}</template>
         </el-table-column>
         <el-table-column label="操作" width="160" align="center">
           <template slot-scope="scope">
             <el-button
               size="mini"
-              @click="handleUpdate(scope.$index, scope.row)">编辑</el-button>
+              @click="handleUpdate(scope.$index, scope.row)">Edit</el-button>
             <el-button
               size="mini"
-              @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+              @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -53,7 +53,7 @@
     <div class="batch-operate-container">
       <el-select
         size="small"
-        v-model="operateType" placeholder="批量操作">
+        v-model="operateType">
         <el-option
           v-for="item in operateOptions"
           :key="item.value"
@@ -67,7 +67,7 @@
         @click="handleBatchOperate"
         type="primary"
         size="small">
-        确定
+        Delete
       </el-button>
     </div>
     <div class="pagination-container">
@@ -83,23 +83,23 @@
       </el-pagination>
     </div>
     <el-dialog
-      title="添加退货原因"
+      title="Add reason for return"
       :visible.sync="dialogVisible" width="30%">
       <el-form :model="returnReason"
                ref="reasonForm" label-width="150px">
-        <el-form-item label="原因类型：">
+        <el-form-item label="Reason type: ">
           <el-input v-model="returnReason.name" class="input-width"></el-input>
         </el-form-item>
-        <el-form-item label="排序：">
+        <el-form-item label="Sort by: ">
           <el-input v-model="returnReason.sort" class="input-width"></el-input>
         </el-form-item>
-        <el-form-item label="是否启用：">
+        <el-form-item label="Whether to enable: ">
           <el-switch v-model="returnReason.status" :active-value="1" :inactive-value="0"></el-switch>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="handleConfirm">确 定</el-button>
+        <el-button @click="dialogVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="handleConfirm">OK</el-button>
       </span>
     </el-dialog>
   </div>
@@ -129,7 +129,7 @@
         operateType:null,
         operateOptions: [
           {
-            label: "删除",
+            label: "Delete",
             value: 1
           }
         ],
@@ -167,12 +167,12 @@
             this.getList();
           });
         }else{
-          //编辑操作
+          //Edit operation
           updateReason(this.operateReasonId,this.returnReason).then(response=>{
             this.dialogVisible=false;
             this.operateReasonId=null;
             this.$message({
-              message: '修改成功！',
+              message: 'Successfully modified!',
               type: 'success',
               duration:1000
             });
@@ -203,7 +203,7 @@
         param.append("ids",ids);
         updateStatus(param).then(response=>{
           this.$message({
-            message: '状态修改成功',
+            message: 'Status modified successfully',
             type: 'success'
           });
         });
@@ -211,7 +211,7 @@
       handleBatchOperate(){
         if(this.multipleSelection==null||this.multipleSelection.length<1){
           this.$message({
-            message: '请选择要操作的条目',
+            message: 'Please select an entry to operate',
             type: 'warning',
             duration: 1000
           });
@@ -243,16 +243,16 @@
         });
       },
       deleteReason(ids){
-        this.$confirm('是否要进行该删除操作?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm('Whether to delete?', 'prompt', {
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
           let params = new URLSearchParams();
           params.append("ids",ids);
           deleteReason(params).then(response=>{
             this.$message({
-              message: '删除成功！',
+              message: 'Successfully deleted!',
               type: 'success',
               duration: 1000
             });

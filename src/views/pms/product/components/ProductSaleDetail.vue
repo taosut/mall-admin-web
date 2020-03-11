@@ -1,95 +1,95 @@
 <template>
   <div style="margin-top: 50px">
     <el-form :model="value" ref="productSaleForm" label-width="120px" style="width: 600px" size="small">
-      <el-form-item label="赠送积分：">
+      <el-form-item label="Gift points: ">
         <el-input v-model="value.giftPoint"></el-input>
       </el-form-item>
-      <el-form-item label="赠送成长值：">
+      <el-form-item label="Give growth value: ">
         <el-input v-model="value.giftGrowth"></el-input>
       </el-form-item>
-      <el-form-item label="积分购买限制：">
+      <el-form-item label="Points purchase limit: ">
         <el-input v-model="value.usePointLimit"></el-input>
       </el-form-item>
-      <el-form-item label="预告商品：">
+      <el-form-item label="Trailer Goods: ">
         <el-switch
           v-model="value.previewStatus"
           :active-value="1"
           :inactive-value="0">
         </el-switch>
       </el-form-item>
-      <el-form-item label="商品上架：">
+      <el-form-item label="Product on shelves: ">
         <el-switch
           v-model="value.publishStatus"
           :active-value="1"
           :inactive-value="0">
         </el-switch>
       </el-form-item>
-      <el-form-item label="商品推荐：">
-        <span style="margin-right: 10px">新品</span>
+      <el-form-item label="Products Featured: ">
+        <span style="margin-right: 10px">New product</span>
         <el-switch
           v-model="value.newStatus"
           :active-value="1"
           :inactive-value="0">
         </el-switch>
-        <span style="margin-left: 10px;margin-right: 10px">推荐</span>
+        <span style="margin-left: 10px;margin-right: 10px">Recommend</span>
         <el-switch
           v-model="value.recommandStatus"
           :active-value="1"
           :inactive-value="0">
         </el-switch>
       </el-form-item>
-      <el-form-item label="服务保证：">
+      <el-form-item label="Service guarantee: ">
         <el-checkbox-group v-model="selectServiceList">
-          <el-checkbox :label="1">无忧退货</el-checkbox>
-          <el-checkbox :label="2">快速退款</el-checkbox>
-          <el-checkbox :label="3">免费包邮</el-checkbox>
+          <el-checkbox :label="1">Worry-free returns</el-checkbox>
+          <el-checkbox :label="2">Fast refund</el-checkbox>
+          <el-checkbox :label="3">Free shipping</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
-      <el-form-item label="详细页标题：">
+      <el-form-item label="Detail page title: ">
         <el-input v-model="value.detailTitle"></el-input>
       </el-form-item>
-      <el-form-item label="详细页描述：">
+      <el-form-item label="Detailed page description: ">
         <el-input v-model="value.detailDesc"></el-input>
       </el-form-item>
-      <el-form-item label="商品关键字：">
+      <el-form-item label="Product keywords: ">
         <el-input v-model="value.keywords"></el-input>
       </el-form-item>
-      <el-form-item label="商品备注：">
+      <el-form-item label="Product Notes: ">
         <el-input v-model="value.note" type="textarea" :autoSize="true"></el-input>
       </el-form-item>
-      <el-form-item label="选择优惠方式：">
+      <el-form-item label="Choose a discount method: ">
         <el-radio-group v-model="value.promotionType" size="small">
-          <el-radio-button :label="0">无优惠</el-radio-button>
-          <el-radio-button :label="1">特惠促销</el-radio-button>
-          <el-radio-button :label="2">会员价格</el-radio-button>
-          <el-radio-button :label="3">阶梯价格</el-radio-button>
-          <el-radio-button :label="4">满减价格</el-radio-button>
+          <el-radio-button :label="0">No discount</el-radio-button>
+          <el-radio-button :label="1">Special promotion</el-radio-button>
+          <el-radio-button :label="2">Member price</el-radio-button>
+          <el-radio-button :label="3">Ladder price</el-radio-button>
+          <el-radio-button :label="4">Full discount</el-radio-button>
         </el-radio-group>
       </el-form-item>
       <el-form-item v-show="value.promotionType===1">
         <div>
-          开始时间：
+          Starting time: 
           <el-date-picker
             v-model="value.promotionStartTime"
             value-format="timestamp"
             type="datetime"
             :picker-options="pickerOptions1"
-            placeholder="选择开始时间">
+            placeholder="Select start time">
           </el-date-picker>
         </div>
         <div class="littleMargin">
-          结束时间：
+          End Time: 
           <el-date-picker
             v-model="value.promotionEndTime"
             value-format="timestamp"
             type="datetime"
             :picker-options="pickerOptions1"
-            placeholder="选择结束时间">
+            placeholder="Select end time">
           </el-date-picker>
         </div>
         <div class="littleMargin">
-          促销价格：
-          <el-input style="width: 220px" v-model="value.promotionPrice" placeholder="输入促销价格"></el-input>
+          Sales price:
+          <el-input style="width: 220px" v-model="value.promotionPrice" placeholder="Enter promotional price"></el-input>
         </div>
 
       </el-form-item>
@@ -103,7 +103,7 @@
         <el-table :data="value.productLadderList"
                   style="width: 80%" border>
           <el-table-column
-            label="数量"
+            label="Quantity"
             align="center"
             width="120">
             <template slot-scope="scope">
@@ -111,7 +111,7 @@
             </template>
           </el-table-column>
           <el-table-column
-            label="折扣"
+            label="Discount"
             align="center"
             width="120">
             <template slot-scope="scope">
@@ -120,10 +120,10 @@
           </el-table-column>
           <el-table-column
             align="center"
-            label="操作">
+            label="Operating">
             <template slot-scope="scope">
-              <el-button type="text" @click="handleRemoveProductLadder(scope.$index, scope.row)">删除</el-button>
-              <el-button type="text" @click="handleAddProductLadder(scope.$index, scope.row)">添加</el-button>
+              <el-button type="text" @click="handleRemoveProductLadder(scope.$index, scope.row)">Delete</el-button>
+              <el-button type="text" @click="handleAddProductLadder(scope.$index, scope.row)">Add</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -132,7 +132,7 @@
         <el-table :data="value.productFullReductionList"
                   style="width: 80%" border>
           <el-table-column
-            label="满"
+            label="Full"
             align="center"
             width="120">
             <template slot-scope="scope">
@@ -140,7 +140,7 @@
             </template>
           </el-table-column>
           <el-table-column
-            label="立减"
+            label="Decrease"
             align="center"
             width="120">
             <template slot-scope="scope">
@@ -151,15 +151,15 @@
             align="center"
             label="操作">
             <template slot-scope="scope">
-              <el-button type="text" @click="handleRemoveFullReduction(scope.$index, scope.row)">删除</el-button>
-              <el-button type="text" @click="handleAddFullReduction(scope.$index, scope.row)">添加</el-button>
+              <el-button type="text" @click="handleRemoveFullReduction(scope.$index, scope.row)">Delete</el-button>
+              <el-button type="text" @click="handleAddFullReduction(scope.$index, scope.row)">Add</el-button>
             </template>
           </el-table-column>
         </el-table>
       </el-form-item>
       <el-form-item style="text-align: center">
-        <el-button size="medium" @click="handlePrev">上一步，填写商品信息</el-button>
-        <el-button type="primary" size="medium" @click="handleNext">下一步，填写商品属性</el-button>
+        <el-button size="medium" @click="handlePrev">Previous step, fill in the product information</el-button>
+        <el-button type="primary" size="medium" @click="handleNext">Next, fill in the product attributes</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -179,7 +179,7 @@
     },
     data() {
       return {
-        //日期选择器配置
+        //Date picker configuration
         pickerOptions1: {
           disabledDate(time) {
             return time.getTime() < Date.now();
@@ -202,7 +202,7 @@
       }
     },
     computed: {
-      //选中的服务保证
+      //Selected Service Guarantee
       selectServiceList: {
         get() {
           let list = [];
@@ -260,7 +260,7 @@
           })
         } else {
           this.$message({
-            message: '最多只能添加三条',
+            message: 'Add up to three',
             type: 'warning'
           });
         }
@@ -286,7 +286,7 @@
           });
         } else {
           this.$message({
-            message: '最多只能添加三条',
+            message: 'Add up to three',
             type: 'warning'
           });
         }

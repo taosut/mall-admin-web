@@ -3,12 +3,12 @@
     <el-card class="operate-container" shadow="never">
 
       <i class="el-icon-tickets" style="margin-top: 5px"></i>
-      <span style="margin-top: 5px">数据列表</span>
+      <span style="margin-top: 5px">Datasheets</span>
       <el-button
         class="btn-add"
         @click="addProductAttr()"
         size="mini">
-        添加
+        Add
       </el-button>
     </el-card>
     <div class="table-container">
@@ -19,37 +19,37 @@
                 v-loading="listLoading"
                 border>
         <el-table-column type="selection" width="60" align="center"></el-table-column>
-        <el-table-column label="编号" width="100" align="center">
+        <el-table-column label="Number" width="100" align="center">
           <template slot-scope="scope">{{scope.row.id}}</template>
         </el-table-column>
-        <el-table-column label="属性名称" width="140" align="center">
+        <el-table-column label="Attribute name" width="140" align="center">
           <template slot-scope="scope">{{scope.row.name}}</template>
         </el-table-column>
-        <el-table-column label="商品类型" width="140" align="center">
+        <el-table-column label="Product Types" width="140" align="center">
           <template slot-scope="scope">{{$route.query.cname}}</template>
         </el-table-column>
-        <el-table-column label="属性是否可选" width="120" align="center">
+        <el-table-column label="Whether the attribute is optional" width="120" align="center">
           <template slot-scope="scope">{{scope.row.selectType|selectTypeFilter}}</template>
         </el-table-column>
-        <el-table-column label="属性值的录入方式" width="150" align="center">
+        <el-table-column label="How to enter attribute values" width="150" align="center">
           <template slot-scope="scope">{{scope.row.inputType|inputTypeFilter}}</template>
         </el-table-column>
-        <el-table-column label="可选值列表" align="center">
+        <el-table-column label="List of optional values" align="center">
           <template slot-scope="scope">{{scope.row.inputList}}</template>
         </el-table-column>
-        <el-table-column label="排序" width="100" align="center">
+        <el-table-column label="Sort" width="100" align="center">
           <template slot-scope="scope">{{scope.row.sort}}</template>
         </el-table-column>
-        <el-table-column label="操作" width="200" align="center">
+        <el-table-column label="Operating" width="200" align="center">
           <template slot-scope="scope">
             <el-button
               size="mini"
-              @click="handleUpdate(scope.$index, scope.row)">编辑
+              @click="handleUpdate(scope.$index, scope.row)">Edit
             </el-button>
             <el-button
               size="mini"
               type="danger"
-              @click="handleDelete(scope.$index, scope.row)">删除
+              @click="handleDelete(scope.$index, scope.row)">Delete
             </el-button>
           </template>
         </el-table-column>
@@ -58,7 +58,7 @@
     <div class="batch-operate-container">
       <el-select
         size="small"
-        v-model="operateType" placeholder="批量操作">
+        v-model="operateType">
         <el-option
           v-for="item in operates"
           :key="item.value"
@@ -72,7 +72,7 @@
         @click="handleBatchOperate()"
         type="primary"
         size="small">
-        确定
+        determine
       </el-button>
     </div>
     <div class="pagination-container">
@@ -108,7 +108,7 @@
         multipleSelection: [],
         operates: [
           {
-            label: "删除",
+            label: "Delete",
             value: "deleteProductAttr"
           }
         ]
@@ -135,7 +135,7 @@
       handleBatchOperate() {
         if (this.multipleSelection < 1) {
           this.$message({
-            message: '请选择一条记录',
+            message: 'Please select a record',
             type: 'warning',
             duration: 1000
           });
@@ -143,7 +143,7 @@
         }
         if (this.operateType !== 'deleteProductAttr') {
           this.$message({
-            message: '请选择批量操作类型',
+            message: 'Please select a batch operation type',
             type: 'warning',
             duration: 1000
           });
@@ -168,16 +168,16 @@
         this.$router.push({path:'/pms/updateProductAttr',query:{id:row.id}});
       },
       handleDeleteProductAttr(ids) {
-        this.$confirm('是否要删除该属性', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm('Whether to delete the attribute', 'prompt', {
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
           let data = new URLSearchParams();
           data.append("ids", ids);
           deleteProductAttr(data).then(response => {
             this.$message({
-              message: '删除成功',
+              message: 'successfully deleted',
               type: 'success',
               duration: 1000
             });
@@ -194,18 +194,18 @@
     filters: {
       inputTypeFilter(value) {
         if (value === 1) {
-          return '从列表中选取';
+          return 'Pick from the list';
         } else {
-          return '手工录入'
+          return 'Manual input'
         }
       },
       selectTypeFilter(value) {
         if (value === 1) {
-          return '单选';
+          return 'Single choice';
         } else if (value === 2) {
-          return '多选';
+          return 'Multiple choice';
         } else {
-          return '唯一'
+          return 'Only'
         }
       },
     }

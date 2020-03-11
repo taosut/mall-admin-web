@@ -2,54 +2,54 @@
   <div class="app-container">
     <el-card class="operate-container" shadow="never">
       <i class="el-icon-tickets"></i>
-      <span>数据列表</span>
-      <el-button size="mini" class="btn-add" @click="handleSelectProduct()" style="margin-left: 20px">添加</el-button>
+      <span>Datasheets</span>
+      <el-button size="mini" class="btn-add" @click="handleSelectProduct()" style="margin-left: 20px">Add</el-button>
     </el-card>
     <div class="table-container">
       <el-table ref="productRelationTable"
                 :data="list"
                 style="width: 100%;"
                 v-loading="listLoading" border>
-        <el-table-column label="编号" width="100" align="center">
+        <el-table-column label="Number" width="100" align="center">
           <template slot-scope="scope">{{scope.row.id}}</template>
         </el-table-column>
-        <el-table-column label="商品名称" align="center">
+        <el-table-column label="Product name" align="center">
           <template slot-scope="scope">{{scope.row.product.name}}</template>
         </el-table-column>
-        <el-table-column label="货号" width="140" align="center">
+        <el-table-column label="Article number" width="140" align="center">
           <template slot-scope="scope">NO.{{scope.row.product.productSn}}</template>
         </el-table-column>
-        <el-table-column label="商品价格" width="100" align="center">
+        <el-table-column label="Commodity price" width="100" align="center">
           <template slot-scope="scope">￥{{scope.row.product.price}}</template>
         </el-table-column>
-        <el-table-column label="剩余数量" width="100" align="center">
+        <el-table-column label="The remaining amount" width="100" align="center">
           <template slot-scope="scope">{{scope.row.product.stock}}</template>
         </el-table-column>
-        <el-table-column label="秒杀价格" width="100" align="center">
+        <el-table-column label="Promotion price" width="100" align="center">
           <template slot-scope="scope">
             <p v-if="scope.row.flashPromotionPrice!==null">
               ￥{{scope.row.flashPromotionPrice}}
             </p>
           </template>
         </el-table-column>
-        <el-table-column label="秒杀数量" width="100" align="center">
+        <el-table-column label="Number of spikes" width="100" align="center">
           <template slot-scope="scope">{{scope.row.flashPromotionCount}}</template>
         </el-table-column>
-        <el-table-column label="限购数量" width="100" align="center">
+        <el-table-column label="Purchase limit" width="100" align="center">
           <template slot-scope="scope">{{scope.row.flashPromotionLimit}}</template>
         </el-table-column>
-        <el-table-column label="排序" width="100" align="center">
+        <el-table-column label="Sort" width="100" align="center">
           <template slot-scope="scope">{{scope.row.sort}}</template>
         </el-table-column>
-        <el-table-column label="操作" width="100" align="center">
+        <el-table-column label="Operating" width="100" align="center">
           <template slot-scope="scope">
             <el-button size="mini"
                        type="text"
-                       @click="handleUpdate(scope.$index, scope.row)">编辑
+                       @click="handleUpdate(scope.$index, scope.row)">Edit
             </el-button>
             <el-button size="mini"
                        type="text"
-                       @click="handleDelete(scope.$index, scope.row)">删除
+                       @click="handleDelete(scope.$index, scope.row)">Delete
             </el-button>
           </template>
         </el-table-column>
@@ -67,23 +67,23 @@
         :total="total">
       </el-pagination>
     </div>
-    <el-dialog title="选择商品" :visible.sync="selectDialogVisible" width="50%">
+    <el-dialog title="Select product" :visible.sync="selectDialogVisible" width="50%">
       <el-input v-model="dialogData.listQuery.keyword"
                 style="width: 250px;margin-bottom: 20px"
                 size="small"
-                placeholder="商品名称搜索">
+                placeholder="Product name search">
         <el-button slot="append" icon="el-icon-search" @click="handleSelectSearch()"></el-button>
       </el-input>
       <el-table :data="dialogData.list"
                 @selection-change="handleDialogSelectionChange" border>
         <el-table-column type="selection" width="60" align="center"></el-table-column>
-        <el-table-column label="商品名称" align="center">
+        <el-table-column label="Product name" align="center">
           <template slot-scope="scope">{{scope.row.name}}</template>
         </el-table-column>
-        <el-table-column label="货号" width="160" align="center">
+        <el-table-column label="Article number" width="160" align="center">
           <template slot-scope="scope">NO.{{scope.row.productSn}}</template>
         </el-table-column>
-        <el-table-column label="价格" width="120" align="center">
+        <el-table-column label="Price" width="120" align="center">
           <template slot-scope="scope">￥{{scope.row.price}}</template>
         </el-table-column>
       </el-table>
@@ -101,46 +101,46 @@
       </div>
       <div style="clear: both;"></div>
       <div slot="footer">
-        <el-button  size="small" @click="selectDialogVisible = false">取 消</el-button>
-        <el-button  size="small" type="primary" @click="handleSelectDialogConfirm()">确 定</el-button>
+        <el-button  size="small" @click="selectDialogVisible = false">Cancel</el-button>
+        <el-button  size="small" type="primary" @click="handleSelectDialogConfirm()">OK</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="编辑秒杀商品信息"
+    <el-dialog title="Edit relation product information"
       :visible.sync="editDialogVisible"
       width="40%">
       <el-form :model="flashProductRelation"
                ref="flashProductRelationForm"
                label-width="150px" size="small">
-        <el-form-item label="商品名称：">
+        <el-form-item label="Product name:">
           <span>{{flashProductRelation.product.name}}</span>
         </el-form-item>
-        <el-form-item label="货号：">
+        <el-form-item label="Item: ">
           <span>NO.{{flashProductRelation.product.productSn}}</span>
         </el-form-item>
-        <el-form-item label="商品价格：">
+        <el-form-item label="Commodity price: ">
           <span>￥{{flashProductRelation.product.price}}</span>
         </el-form-item>
-        <el-form-item label="秒杀价格：">
+        <el-form-item label="Promotion price:">
           <el-input v-model="flashProductRelation.flashPromotionPrice" class="input-width">
             <template slot="prepend">￥</template>
           </el-input>
         </el-form-item>
-        <el-form-item label="剩余数量：">
+        <el-form-item label="The remaining amount: ">
           <span>{{flashProductRelation.product.stock}}</span>
         </el-form-item>
-        <el-form-item label="秒杀数量：">
+        <el-form-item label="Number of promotion: ">
           <el-input v-model="flashProductRelation.flashPromotionCount" class="input-width"></el-input>
         </el-form-item>
-        <el-form-item label="限购数量：">
+        <el-form-item label="Restricted quantity:">
           <el-input v-model="flashProductRelation.flashPromotionLimit" class="input-width"></el-input>
         </el-form-item>
-        <el-form-item label="排序：">
+        <el-form-item label="Sort by: ">
           <el-input v-model="flashProductRelation.sort" class="input-width"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="editDialogVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="handleEditDialogConfirm()" size="small">确 定</el-button>
+        <el-button @click="editDialogVisible = false" size="small">Cancel</el-button>
+        <el-button type="primary" @click="handleEditDialogConfirm()" size="small">OK</el-button>
       </span>
     </el-dialog>
   </div>
@@ -204,15 +204,15 @@
         this.flashProductRelation = Object.assign({},row);
       },
       handleDelete(index,row){
-        this.$confirm('是否要删除该商品?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm('Do you want to delete this product?', 'prompt', {
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
           deleteFlashProductRelation(row.id).then(response => {
             this.$message({
               type: 'success',
-              message: '删除成功!'
+              message: 'Successfully deleted!'
             });
             this.getList();
           });
@@ -236,7 +236,7 @@
       handleSelectDialogConfirm(){
         if (this.dialogData.multipleSelection < 1) {
           this.$message({
-            message: '请选择一条记录',
+            message: 'Please select a record',
             type: 'warning',
             duration: 1000
           });
@@ -250,9 +250,9 @@
             flashPromotionSessionId:this.listQuery.flashPromotionSessionId
           });
         }
-        this.$confirm('使用要进行添加操作?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm('Use to add?', 'prompt', {
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
           createFlashProductRelation(selectProducts).then(response=>{
@@ -261,20 +261,20 @@
             this.getList();
             this.$message({
               type: 'success',
-              message: '添加成功!'
+              message: 'Added successfully!'
             });
           });
         });
       },
       handleEditDialogConfirm(){
-        this.$confirm('是否要确认?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm('Do you want to confirm?', 'prompt', {
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
             updateFlashProductRelation(this.flashProductRelation.id,this.flashProductRelation).then(response => {
               this.$message({
-                message: '修改成功！',
+                message: 'Successfully modified!',
                 type: 'success'
               });
               this.editDialogVisible =false;

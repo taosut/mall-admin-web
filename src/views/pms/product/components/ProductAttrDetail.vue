@@ -1,9 +1,9 @@
 <template>
   <div style="margin-top: 50px">
     <el-form :model="value" ref="productAttrForm" label-width="120px" style="width: 720px" size="small">
-      <el-form-item label="属性类型：">
+      <el-form-item label="Property type: ">
         <el-select v-model="value.productAttributeCategoryId"
-                   placeholder="请选择属性类型"
+                   placeholder="Please select an attribute type"
                    @change="handleProductAttrChange">
           <el-option
             v-for="item in productAttributeCategoryOptions"
@@ -13,7 +13,7 @@
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="商品规格：">
+      <el-form-item label="Product specifications: ">
         <el-card shadow="never" class="cardBg">
           <div v-for="(productAttr,idx) in selectProductAttr">
             {{productAttr.name}}：
@@ -26,12 +26,12 @@
                 <div v-for="(item,index) in selectProductAttr[idx].options" style="display: inline-block"
                      class="littleMarginLeft">
                   <el-checkbox :label="item" :key="item"></el-checkbox>
-                  <el-button type="text" class="littleMarginLeft" @click="handleRemoveProductAttrValue(idx,index)">删除
+                  <el-button type="text" class="littleMarginLeft" @click="handleRemoveProductAttrValue(idx,index)">Delete
                   </el-button>
                 </div>
               </el-checkbox-group>
               <el-input v-model="addProductAttrValue" style="width: 160px;margin-left: 10px" clearable></el-input>
-              <el-button class="littleMarginLeft" @click="handleAddProductAttrValue(idx)">增加</el-button>
+              <el-button class="littleMarginLeft" @click="handleAddProductAttrValue(idx)">Add product attr value</el-button>
             </div>
           </div>
         </el-card>
@@ -48,7 +48,7 @@
             </template>
           </el-table-column>
           <el-table-column
-            label="销售价格"
+            label="Selling price"
             width="80"
             align="center">
             <template slot-scope="scope">
@@ -56,7 +56,7 @@
             </template>
           </el-table-column>
           <el-table-column
-            label="商品库存"
+            label="Stocks"
             width="80"
             align="center">
             <template slot-scope="scope">
@@ -64,7 +64,7 @@
             </template>
           </el-table-column>
           <el-table-column
-            label="库存预警值"
+            label="Inventory warning value"
             width="80"
             align="center">
             <template slot-scope="scope">
@@ -72,20 +72,20 @@
             </template>
           </el-table-column>
           <el-table-column
-            label="SKU编号"
+            label="SKU number"
             align="center">
             <template slot-scope="scope">
               <el-input v-model="scope.row.skuCode"></el-input>
             </template>
           </el-table-column>
           <el-table-column
-            label="操作"
+            label="Operating"
             width="80"
             align="center">
             <template slot-scope="scope">
               <el-button
                 type="text"
-                @click="handleRemoveProductSku(scope.$index, scope.row)">删除
+                @click="handleRemoveProductSku(scope.$index, scope.row)">Delete
               </el-button>
             </template>
           </el-table-column>
@@ -93,20 +93,20 @@
         <el-button
           type="primary"
           style="margin-top: 20px"
-          @click="handleRefreshProductSkuList">刷新列表
+          @click="handleRefreshProductSkuList">Refresh the list
         </el-button>
         <el-button
           type="primary"
           style="margin-top: 20px"
-          @click="handleSyncProductSkuPrice">同步价格
+          @click="handleSyncProductSkuPrice">Synchronized price
         </el-button>
         <el-button
           type="primary"
           style="margin-top: 20px"
-          @click="handleSyncProductSkuStock">同步库存
+          @click="handleSyncProductSkuStock">Synchronized inventory
         </el-button>
       </el-form-item>
-      <el-form-item label="属性图片：" v-if="hasAttrPic">
+      <el-form-item label="Property image: " v-if="hasAttrPic">
         <el-card shadow="never" class="cardBg">
           <div v-for="(item,index) in selectProductAttrPics">
             <span>{{item.name}}:</span>
@@ -115,7 +115,7 @@
           </div>
         </el-card>
       </el-form-item>
-      <el-form-item label="商品参数：">
+      <el-form-item label="Product parameters: ">
         <el-card shadow="never" class="cardBg">
           <div v-for="(item,index) in selectProductParam" :class="{littleMarginTop:index!==0}">
             <div class="paramInputLabel">{{item.name}}:</div>
@@ -131,22 +131,22 @@
           </div>
         </el-card>
       </el-form-item>
-      <el-form-item label="商品相册：">
+      <el-form-item label="Product album: ">
         <multi-upload v-model="selectProductPics"></multi-upload>
       </el-form-item>
-      <el-form-item label="规格参数：">
+      <el-form-item label="Specifications: ">
         <el-tabs v-model="activeHtmlName" type="card">
-          <el-tab-pane label="电脑端详情" name="pc">
+          <el-tab-pane label="Computer details" name="pc">
             <tinymce :width="595" :height="300" v-model="value.detailHtml"></tinymce>
           </el-tab-pane>
-          <el-tab-pane label="移动端详情" name="mobile">
+          <el-tab-pane label="Mobile details" name="mobile">
             <tinymce :width="595" :height="300" v-model="value.detailMobileHtml"></tinymce>
           </el-tab-pane>
         </el-tabs>
       </el-form-item>
       <el-form-item style="text-align: center">
-        <el-button size="medium" @click="handlePrev">上一步，填写商品促销</el-button>
-        <el-button type="primary" size="medium" @click="handleNext">下一步，选择商品关联</el-button>
+        <el-button size="medium" @click="handlePrev">Back, fill in product promotion</el-button>
+        <el-button type="primary" size="medium" @click="handleNext">Next, select product association</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -171,35 +171,35 @@
     },
     data() {
       return {
-        //编辑模式时是否初始化成功
+        //Whether the initialization was successful in edit mode
         hasEditCreated:false,
-        //商品属性分类下拉选项
+        //Product attribute classification drop-down options
         productAttributeCategoryOptions: [],
-        //选中的商品属性
+        //Selected product attributes
         selectProductAttr: [],
-        //选中的商品参数
+        //Selected product parameters
         selectProductParam: [],
-        //选中的商品属性图片
+        //Selected product attribute picture
         selectProductAttrPics: [],
-        //可手动添加的商品属性
+        //Product attributes that can be added manually
         addProductAttrValue: '',
-        //商品富文本详情激活类型
+        //Product rich text details activation type
         activeHtmlName: 'pc'
       }
     },
     computed: {
-      //是否有商品属性图片
+      //Is there a product attribute picture
       hasAttrPic() {
         if (this.selectProductAttrPics.length < 1) {
           return false;
         }
         return true;
       },
-      //商品的编号
+      //Product ID
       productId(){
         return this.value.id;
       },
-      //商品的主图和画册图片
+      //Product main and album pictures
       selectProductPics:{
         get:function () {
           let pics=[];
@@ -248,7 +248,7 @@
     },
     methods: {
       handleEditCreated() {
-        //根据商品属性分类id获取属性和参数
+        //Get attributes and parameters based on product attribute classification id
         if(this.value.productAttributeCategoryId!=null){
           this.handleProductAttrChange(this.value.productAttributeCategoryId);
         }
@@ -275,10 +275,10 @@
               let values = [];
               if (this.isEdit) {
                 if (list[i].handAddStatus === 1) {
-                  //编辑状态下获取手动添加编辑属性
+                  //Get edit attributes manually added in edit state
                   options = this.getEditAttrOptions(list[i].id);
                 }
-                //编辑状态下获取选中属性
+                //Get selected attributes in edit state
                 values = this.getEditAttrValues(i);
               }
               this.selectProductAttr.push({
@@ -291,7 +291,7 @@
               });
             }
             if(this.isEdit){
-              //编辑模式下刷新商品属性图片
+              //Refresh product attribute picture in edit mode
               this.refreshProductAttrPics();
             }
           } else {
@@ -299,7 +299,7 @@
             for (let i = 0; i < list.length; i++) {
               let value=null;
               if(this.isEdit){
-                //编辑模式下获取参数属性
+                //Get parameter properties in edit mode
                 value= this.getEditParamValue(list[i].id);
               }
               this.selectProductParam.push({
@@ -313,7 +313,7 @@
           }
         });
       },
-      //获取设置的可手动添加属性值
+      //Get set manually addable attribute values
       getEditAttrOptions(id) {
         let options = [];
         for (let i = 0; i < this.value.productAttributeValueList.length; i++) {
@@ -328,7 +328,7 @@
         }
         return options;
       },
-      //获取选中的属性值
+      //Get selected attribute value
       getEditAttrValues(index) {
         let values = new Set();
         if (index === 0) {
@@ -358,7 +358,7 @@
         }
         return Array.from(values);
       },
-      //获取属性的值
+      //Get the value of a property
       getEditParamValue(id){
         for(let i=0;i<this.value.productAttributeValueList.length;i++){
           if(id===this.value.productAttributeValueList[i].productAttributeId){
@@ -377,7 +377,7 @@
         let options = this.selectProductAttr[idx].options;
         if (this.addProductAttrValue == null || this.addProductAttrValue == '') {
           this.$message({
-            message: '属性值不能为空',
+            message: 'Attribute value cannot be empty',
             type: 'warning',
             duration: 1000
           });
@@ -385,7 +385,7 @@
         }
         if (options.indexOf(this.addProductAttrValue) !== -1) {
           this.$message({
-            message: '属性值不能重复',
+            message: 'Attribute value cannot be duplicated',
             type: 'warning',
             duration: 1000
           });
@@ -406,9 +406,9 @@
         }
       },
       handleRefreshProductSkuList() {
-        this.$confirm('刷新列表将导致sku信息重新生成，是否要刷新', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm('Refreshing the list will cause the sku information to be regenerated, whether to refresh', 'prompt', {
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
           this.refreshProductAttrPics();
@@ -416,9 +416,9 @@
         });
       },
       handleSyncProductSkuPrice(){
-        this.$confirm('将同步第一个sku的价格到所有sku,是否继续', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm('Will sync the price of the first sku to all skus, whether to continue', 'prompt', {
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
           if(this.value.skuStockList!==null&&this.value.skuStockList.length>0){
@@ -434,9 +434,9 @@
         });
       },
       handleSyncProductSkuStock(){
-        this.$confirm('将同步第一个sku的库存到所有sku,是否继续', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm('Will sync the inventory of the first sku to all skus, whether to continue', 'prompt', {
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
           if(this.value.skuStockList!==null&&this.value.skuStockList.length>0){
@@ -456,7 +456,7 @@
       refreshProductSkuList() {
         this.value.skuStockList = [];
         let skuList = this.value.skuStockList;
-        //只有一个属性时
+        //When there is only one attribute
         if (this.selectProductAttr.length === 1) {
           let attr = this.selectProductAttr[0];
           for (let i = 0; i < attr.values.length; i++) {
@@ -524,14 +524,14 @@
           for (let i = 0; i < values.length; i++) {
             let pic=null;
             if(this.isEdit){
-              //编辑状态下获取图片
+              //Get pictures in edit mode
               pic=this.getProductSkuPic(values[i]);
             }
             this.selectProductAttrPics.push({name: values[i], pic: pic})
           }
         }
       },
-      //获取商品相关属性的图片
+      //Get pictures of product-related attributes
       getProductSkuPic(name){
         for(let i=0;i<this.value.skuStockList.length;i++){
           let spData = JSON.parse(this.value.skuStockList[i].spData);
@@ -541,7 +541,7 @@
         }
         return null;
       },
-      //合并商品属性
+      //Merging product attributes
       mergeProductAttrValue() {
         this.value.productAttributeValueList = [];
         for (let i = 0; i < this.selectProductAttr.length; i++) {
@@ -561,7 +561,7 @@
           });
         }
       },
-      //合并商品属性图片
+      //Merging product attribute pictures
       mergeProductAttrPics() {
         for (let i = 0; i < this.selectProductAttrPics.length; i++) {
           for (let j = 0; j < this.value.skuStockList.length; j++) {

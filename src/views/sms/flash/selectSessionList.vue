@@ -2,33 +2,33 @@
   <div class="app-container">
     <el-card shadow="never" class="operate-container">
       <i class="el-icon-tickets"></i>
-      <span>数据列表</span>
+      <span>Datasheets</span>
     </el-card>
     <div class="table-container">
       <el-table ref="selectSessionTable"
                 :data="list"
                 style="width: 100%;"
                 v-loading="listLoading" border>
-        <el-table-column label="编号" width="100" align="center">
+        <el-table-column label="Number" width="100" align="center">
           <template slot-scope="scope">{{scope.row.id}}</template>
         </el-table-column>
-        <el-table-column label="秒杀时间段名称" align="center">
+        <el-table-column label="Period Name" align="center">
           <template slot-scope="scope">{{scope.row.name}}</template>
         </el-table-column>
-        <el-table-column label="每日开始时间" align="center">
+        <el-table-column label="Start time" align="center">
           <template slot-scope="scope">{{scope.row.startTime | formatTime}}</template>
         </el-table-column>
-        <el-table-column label="每日结束时间" align="center">
+        <el-table-column label="End of day" align="center">
           <template slot-scope="scope">{{scope.row.endTime | formatTime}}</template>
         </el-table-column>
-        <el-table-column label="商品数量" align="center">
+        <el-table-column label="Number of Products" align="center">
           <template slot-scope="scope">{{scope.row.productCount}}</template>
         </el-table-column>
-        <el-table-column label="操作" align="center">
+        <el-table-column label="Operating" align="center">
           <template slot-scope="scope">
             <el-button size="mini"
                        type="text"
-                       @click="handleShowRelation(scope.$index, scope.row)">商品列表
+                       @click="handleShowRelation(scope.$index, scope.row)">Product list
             </el-button>
           </template>
         </el-table-column>

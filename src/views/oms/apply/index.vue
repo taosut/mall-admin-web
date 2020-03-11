@@ -3,28 +3,28 @@
     <el-card class="filter-container" shadow="never">
       <div>
         <i class="el-icon-search"></i>
-        <span>筛选搜索</span>
+        <span>Filter search</span>
         <el-button
           style="float:right"
           type="primary"
           @click="handleSearchList()"
           size="small">
-          查询搜索
+          Query search
         </el-button>
         <el-button
           style="float:right;margin-right: 15px"
           @click="handleResetSearch()"
           size="small">
-          重置
+          Reset
         </el-button>
       </div>
       <div style="margin-top: 15px">
         <el-form :inline="true" :model="listQuery" size="small" label-width="140px">
-          <el-form-item label="输入搜索：">
-            <el-input v-model="listQuery.id" class="input-width" placeholder="服务单号"></el-input>
+          <el-form-item label="Enter search: ">
+            <el-input v-model="listQuery.id" class="input-width" placeholder="Ticket number"></el-input>
           </el-form-item>
-          <el-form-item label="处理状态：">
-            <el-select v-model="listQuery.status" placeholder="全部" clearable class="input-width">
+          <el-form-item label="Processing status: ">
+            <el-select v-model="listQuery.status" placeholder="All" clearable class="input-width">
               <el-option v-for="item in statusOptions"
                          :key="item.value"
                          :label="item.label"
@@ -32,25 +32,25 @@
               </el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="申请时间：">
+          <el-form-item label="Application time: ">
             <el-date-picker
               class="input-width"
               v-model="listQuery.createTime"
               value-format="yyyy-MM-dd"
               type="date"
-              placeholder="请选择时间">
+              placeholder="Please select a time">
             </el-date-picker>
           </el-form-item>
-          <el-form-item label="操作人员：">
-            <el-input v-model="listQuery.handleMan" class="input-width" placeholder="全部"></el-input>
+          <el-form-item label="Operator: ">
+            <el-input v-model="listQuery.handleMan" class="input-width" placeholder="All"></el-input>
           </el-form-item>
-          <el-form-item label="处理时间：">
+          <el-form-item label="Processing time: ">
             <el-date-picker
               class="input-width"
               v-model="listQuery.handleTime"
               value-format="yyyy-MM-dd"
               type="date"
-              placeholder="请选择时间">
+              placeholder="Please select a time">
             </el-date-picker>
           </el-form-item>
         </el-form>
@@ -58,7 +58,7 @@
     </el-card>
     <el-card class="operate-container" shadow="never">
       <i class="el-icon-tickets"></i>
-      <span>数据列表</span>
+      <span>Datasheets</span>
     </el-card>
     <div class="table-container">
       <el-table ref="returnApplyTable"
@@ -67,29 +67,29 @@
                 @selection-change="handleSelectionChange"
                 v-loading="listLoading" border>
         <el-table-column type="selection" width="60" align="center"></el-table-column>
-        <el-table-column label="服务单号" width="180" align="center">
+        <el-table-column label="Ticket number" width="180" align="center">
           <template slot-scope="scope">{{scope.row.id}}</template>
         </el-table-column>
-        <el-table-column label="申请时间" width="180" align="center">
+        <el-table-column label="Application time" width="180" align="center">
           <template slot-scope="scope">{{scope.row.createTime | formatTime}}</template>
         </el-table-column>
-        <el-table-column label="用户账号" align="center">
+        <el-table-column label="User account" align="center">
           <template slot-scope="scope">{{scope.row.memberUsername}}</template>
         </el-table-column>
-        <el-table-column label="退款金额" width="180" align="center">
+        <el-table-column label="Refund amount" width="180" align="center">
           <template slot-scope="scope">￥{{scope.row | formatReturnAmount}}</template>
         </el-table-column>
-        <el-table-column label="申请状态" width="180" align="center">
+        <el-table-column label="Application status" width="180" align="center">
           <template slot-scope="scope">{{scope.row.status | formatStatus}}</template>
         </el-table-column>
-        <el-table-column label="处理时间" width="180" align="center">
+        <el-table-column label="Processing time" width="180" align="center">
           <template slot-scope="scope">{{scope.row.handleTime | formatTime}}</template>
         </el-table-column>
-        <el-table-column label="操作" width="180" align="center">
+        <el-table-column label="Operating" width="180" align="center">
           <template slot-scope="scope">
             <el-button
             size="mini"
-            @click="handleViewDetail(scope.$index, scope.row)">查看详情</el-button>
+            @click="handleViewDetail(scope.$index, scope.row)">See details</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -97,7 +97,7 @@
     <div class="batch-operate-container">
       <el-select
         size="small"
-        v-model="operateType" placeholder="批量操作">
+        v-model="operateType">
         <el-option
           v-for="item in operateOptions"
           :key="item.value"
@@ -111,7 +111,7 @@
         @click="handleBatchOperate()"
         type="primary"
         size="small">
-        确定
+        Delete
       </el-button>
     </div>
     <div class="pagination-container">
@@ -143,19 +143,19 @@
   };
   const defaultStatusOptions=[
     {
-      label: '待处理',
+      label: 'Pending',
       value: 0
     },
     {
-      label: '退货中',
+      label: 'Returning',
       value: 1
     },
     {
-      label: '已完成',
+      label: 'completed',
       value: 2
     },
     {
-      label: '已拒绝',
+      label: 'rejected',
       value: 3
     }
   ];
@@ -172,7 +172,7 @@
         operateType:1,
         operateOptions: [
           {
-            label: "批量删除",
+            label: "Batch deletion",
             value: 1
           }
         ],
@@ -217,17 +217,17 @@
       handleBatchOperate(){
         if(this.multipleSelection==null||this.multipleSelection.length<1){
           this.$message({
-            message: '请选择要操作的申请',
+            message: 'Please select an application to operate',
             type: 'warning',
             duration: 1000
           });
           return;
         }
         if(this.operateType===1){
-          //批量删除
-          this.$confirm('是否要进行删除操作?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
+          //batch deletion
+          this.$confirm('Whether to delete?', 'prompt', {
+            confirmButtonText: 'Confirm',
+            cancelButtonText: 'Cancel',
             type: 'warning'
           }).then(() => {
             let params = new URLSearchParams();
@@ -240,7 +240,7 @@
               this.getList();
               this.$message({
                 type: 'success',
-                message: '删除成功!'
+                message: 'Successfully deleted!'
               });
             });
           })
