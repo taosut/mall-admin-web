@@ -3,28 +3,28 @@
     <el-card class="filter-container" shadow="never">
       <div>
         <i class="el-icon-search"></i>
-        <span>筛选搜索</span>
+        <span>Filter search</span>
         <el-button
           style="float:right"
           type="primary"
           @click="handleSearchList()"
           size="small">
-          查询搜索
+          Query search
         </el-button>
         <el-button
           style="float:right;margin-right: 15px"
           @click="handleResetSearch()"
           size="small">
-          重置
+          Reset
         </el-button>
       </div>
       <div style="margin-top: 15px">
         <el-form :inline="true" :model="listQuery" size="small" label-width="140px">
-          <el-form-item label="专题名称：">
-            <el-input v-model="listQuery.subjectName" class="input-width" placeholder="专题名称"></el-input>
+          <el-form-item label="Topic name: ">
+            <el-input v-model="listQuery.subjectName" class="input-width" placeholder="Topic name"></el-input>
           </el-form-item>
-          <el-form-item label="推荐状态：">
-            <el-select v-model="listQuery.recommendStatus" placeholder="全部" clearable class="input-width">
+          <el-form-item label="Recommended status: ">
+            <el-select v-model="listQuery.recommendStatus" placeholder="All" clearable class="input-width">
               <el-option v-for="item in recommendOptions"
                          :key="item.value"
                          :label="item.label"
@@ -37,8 +37,8 @@
     </el-card>
     <el-card class="operate-container" shadow="never">
       <i class="el-icon-tickets"></i>
-      <span>数据列表</span>
-      <el-button size="mini" class="btn-add" @click="handleSelectSubject()">选择专题</el-button>
+      <span>Datasheets</span>
+      <el-button size="mini" class="btn-add" @click="handleSelectSubject()">Select topic</el-button>
     </el-card>
     <div class="table-container">
       <el-table ref="newSubjectTable"
@@ -47,13 +47,13 @@
                 @selection-change="handleSelectionChange"
                 v-loading="listLoading" border>
         <el-table-column type="selection" width="60" align="center"></el-table-column>
-        <el-table-column label="编号" width="120" align="center">
+        <el-table-column label="Number" width="120" align="center">
           <template slot-scope="scope">{{scope.row.id}}</template>
         </el-table-column>
-        <el-table-column label="专题名称" align="center">
+        <el-table-column label="Topic name" align="center">
           <template slot-scope="scope">{{scope.row.subjectName}}</template>
         </el-table-column>
-        <el-table-column label="是否推荐" width="200" align="center">
+        <el-table-column label="Whether to recommend" width="200" align="center">
           <template slot-scope="scope">
             <el-switch
               @change="handleRecommendStatusStatusChange(scope.$index, scope.row)"
@@ -63,21 +63,21 @@
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="排序" width="160" align="center">
+        <el-table-column label="Sort" width="160" align="center">
           <template slot-scope="scope">{{scope.row.sort}}</template>
         </el-table-column>
-        <el-table-column label="状态" width="160" align="center">
+        <el-table-column label="Status" width="160" align="center">
           <template slot-scope="scope">{{scope.row.recommendStatus | formatRecommendStatus}}</template>
         </el-table-column>
-        <el-table-column label="操作" width="180" align="center">
+        <el-table-column label="Operating" width="180" align="center">
           <template slot-scope="scope">
             <el-button size="mini"
                        type="text"
-                       @click="handleEditSort(scope.$index, scope.row)">设置排序
+                       @click="handleEditSort(scope.$index, scope.row)">Edit
             </el-button>
             <el-button size="mini"
                        type="text"
-                       @click="handleDelete(scope.$index, scope.row)">删除
+                       @click="handleDelete(scope.$index, scope.row)">Delete
             </el-button>
           </template>
         </el-table-column>
@@ -86,7 +86,7 @@
     <div class="batch-operate-container">
       <el-select
         size="small"
-        v-model="operateType" placeholder="批量操作">
+        v-model="operateType">
         <el-option
           v-for="item in operates"
           :key="item.value"
@@ -100,7 +100,7 @@
         @click="handleBatchOperate()"
         type="primary"
         size="small">
-        确定
+        Apply
       </el-button>
     </div>
     <div class="pagination-container">
@@ -115,23 +115,23 @@
         :total="total">
       </el-pagination>
     </div>
-    <el-dialog title="选择专题" :visible.sync="selectDialogVisible" width="50%">
+    <el-dialog title="Select topic" :visible.sync="selectDialogVisible" width="50%">
       <el-input v-model="dialogData.listQuery.keyword"
                 style="width: 250px;margin-bottom: 20px"
                 size="small"
-                placeholder="专题名称搜索">
+                placeholder="Topic name search">
         <el-button slot="append" icon="el-icon-search" @click="handleSelectSearch()"></el-button>
       </el-input>
       <el-table :data="dialogData.list"
                 @selection-change="handleDialogSelectionChange" border>
         <el-table-column type="selection" width="60" align="center"></el-table-column>
-        <el-table-column label="专题名称" align="center">
+        <el-table-column label="Topic name" align="center">
           <template slot-scope="scope">{{scope.row.title}}</template>
         </el-table-column>
-        <el-table-column label="所属分类" width="160" align="center">
+        <el-table-column label="Category" width="160" align="center">
           <template slot-scope="scope">{{scope.row.categoryName}}</template>
         </el-table-column>
-        <el-table-column label="添加时间" width="160" align="center">
+        <el-table-column label="Add time" width="160" align="center">
           <template slot-scope="scope">{{scope.row.createTime | formatTime}}</template>
         </el-table-column>
       </el-table>
@@ -149,22 +149,22 @@
       </div>
       <div style="clear: both;"></div>
       <div slot="footer">
-        <el-button  size="small" @click="selectDialogVisible = false">取 消</el-button>
-        <el-button  size="small" type="primary" @click="handleSelectDialogConfirm()">确 定</el-button>
+        <el-button  size="small" @click="selectDialogVisible = false">Cancel</el-button>
+        <el-button  size="small" type="primary" @click="handleSelectDialogConfirm()">OK</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="设置排序"
+    <el-dialog title="Set sort"
                :visible.sync="sortDialogVisible"
                width="40%">
       <el-form :model="sortDialogData"
                label-width="150px">
-        <el-form-item label="排序：">
+        <el-form-item label="Sort by: ">
           <el-input v-model="sortDialogData.sort" style="width: 200px"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer">
-        <el-button @click="sortDialogVisible = false" size="small">取 消</el-button>
-        <el-button type="primary" @click="handleUpdateSort" size="small">确 定</el-button>
+        <el-button @click="sortDialogVisible = false" size="small">Cancel</el-button>
+        <el-button type="primary" @click="handleUpdateSort" size="small">OK</el-button>
       </span>
     </el-dialog>
   </div>
@@ -182,11 +182,11 @@
   };
   const defaultRecommendOptions = [
     {
-      label: '未推荐',
+      label: 'Not recommended',
       value: 0
     },
     {
-      label: '推荐中',
+      label: 'Recommending',
       value: 1
     }
   ];
@@ -202,15 +202,15 @@
         multipleSelection: [],
         operates: [
           {
-            label: "设为推荐",
+            label: "Set as recommended",
             value: 0
           },
           {
-            label: "取消推荐",
+            label: "Cancel recommendation",
             value: 1
           },
           {
-            label: "删除",
+            label: "Delete",
             value: 2
           }
         ],
@@ -236,9 +236,9 @@
     filters:{
       formatRecommendStatus(status){
         if(status===1){
-          return '推荐中';
+          return 'Recommending';
         }else{
-          return '未推荐';
+          return 'Not recommended';
         }
       },
       formatTime(time){
@@ -278,7 +278,7 @@
       handleBatchOperate(){
         if (this.multipleSelection < 1) {
           this.$message({
-            message: '请选择一条记录',
+            message: 'Please select a record',
             type: 'warning',
             duration: 1000
           });
@@ -289,17 +289,17 @@
           ids.push(this.multipleSelection[i].id);
         }
         if (this.operateType === 0) {
-          //设为推荐
+          //Set as recommended
           this.updateRecommendStatusStatus(ids,1);
         } else if (this.operateType === 1) {
-          //取消推荐
+          //Cancel recommendation
           this.updateRecommendStatusStatus(ids,0);
         } else if(this.operateType===2){
-          //删除
+          //delete
           this.deleteSubject(ids);
         }else {
           this.$message({
-            message: '请选择批量操作类型',
+            message: 'Please select a batch operation type',
             type: 'warning',
             duration: 1000
           });
@@ -328,7 +328,7 @@
       handleSelectDialogConfirm(){
         if (this.dialogData.multipleSelection < 1) {
           this.$message({
-            message: '请选择一条记录',
+            message: 'Please select a record',
             type: 'warning',
             duration: 1000
           });
@@ -341,9 +341,9 @@
             subjectName:this.dialogData.multipleSelection[i].title
           });
         }
-        this.$confirm('使用要进行添加操作?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm('Use to add?', 'prompt', {
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
           createHomeSubject(selectSubjects).then(response=>{
@@ -352,7 +352,7 @@
             this.getList();
             this.$message({
               type: 'success',
-              message: '添加成功!'
+              message: 'Added successfully!'
             });
           });
         });
@@ -363,9 +363,9 @@
         this.sortDialogData.id=row.id;
       },
       handleUpdateSort(){
-        this.$confirm('是否要修改排序?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm('Whether to modify the sort?', 'prompt', {
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
           updateHomeSubjectSort(this.sortDialogData).then(response=>{
@@ -373,7 +373,7 @@
             this.getList();
             this.$message({
               type: 'success',
-              message: '删除成功!'
+              message: 'Successfully deleted!'
             });
           });
         })
@@ -387,9 +387,9 @@
         })
       },
       updateRecommendStatusStatus(ids,status){
-        this.$confirm('是否要修改推荐状态?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm('是否要修改推荐状态?', 'prompt', {
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
           let params=new URLSearchParams();
@@ -399,21 +399,21 @@
             this.getList();
             this.$message({
               type: 'success',
-              message: '修改成功!'
+              message: 'Successfully modified!'
             });
           });
         }).catch(() => {
           this.$message({
             type: 'success',
-            message: '已取消操作!'
+            message: 'Operation canceled!'
           });
           this.getList();
         });
       },
       deleteSubject(ids){
-        this.$confirm('是否要删除该推荐?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm('Do you want to delete this recommendation?', 'prompt', {
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
           let params=new URLSearchParams();
@@ -422,7 +422,7 @@
             this.getList();
             this.$message({
               type: 'success',
-              message: '删除成功!'
+              message: 'Successfully deleted!'
             });
           });
         })

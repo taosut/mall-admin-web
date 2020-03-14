@@ -63,7 +63,7 @@
             </el-switch>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="180" align="center">
+        <el-table-column label="Operating" width="180" align="center">
           <template slot-scope="scope">
             <el-button size="mini"
                        type="text"

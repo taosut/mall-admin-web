@@ -3,28 +3,28 @@
     <el-card class="filter-container" shadow="never">
       <div>
         <i class="el-icon-search"></i>
-        <span>筛选搜索</span>
+        <span>Filter search</span>
         <el-button
           style="float:right"
           type="primary"
           @click="handleSearchList()"
           size="small">
-          查询搜索
+          Query search
         </el-button>
         <el-button
           style="float:right;margin-right: 15px"
           @click="handleResetSearch()"
           size="small">
-          重置
+          Reset
         </el-button>
       </div>
       <div style="margin-top: 15px">
         <el-form :inline="true" :model="listQuery" size="small" label-width="140px">
-          <el-form-item label="优惠券名称：">
-            <el-input v-model="listQuery.name" class="input-width" placeholder="优惠券名称"></el-input>
+          <el-form-item label="Coupon name: ">
+            <el-input v-model="listQuery.name" class="input-width" placeholder="Coupon name"></el-input>
           </el-form-item>
-          <el-form-item label="优惠券类型：">
-            <el-select v-model="listQuery.type" placeholder="全部" clearable class="input-width">
+          <el-form-item label="Coupon type: ">
+            <el-select v-model="listQuery.type" placeholder="All" clearable class="input-width">
               <el-option v-for="item in typeOptions"
                          :key="item.value"
                          :label="item.label"
@@ -37,8 +37,8 @@
     </el-card>
     <el-card class="operate-container" shadow="never">
       <i class="el-icon-tickets"></i>
-      <span>数据列表</span>
-      <el-button size="mini" class="btn-add" @click="handleAdd()">添加</el-button>
+      <span>Datasheets</span>
+      <el-button size="mini" class="btn-add" @click="handleAdd()">Add to</el-button>
     </el-card>
     <div class="table-container">
       <el-table ref="couponTable"
@@ -47,45 +47,45 @@
                 @selection-change="handleSelectionChange"
                 v-loading="listLoading" border>
         <el-table-column type="selection" width="60" align="center"></el-table-column>
-        <el-table-column label="编号" width="100" align="center">
+        <el-table-column label="Number" width="100" align="center">
           <template slot-scope="scope">{{scope.row.id}}</template>
         </el-table-column>
-        <el-table-column label="优惠劵名称" align="center">
+        <el-table-column label="Offer Card Name" align="center">
           <template slot-scope="scope">{{scope.row.name}}</template>
         </el-table-column>
-        <el-table-column label="优惠券类型" width="100" align="center">
+        <el-table-column label="Coupon type" width="100" align="center">
           <template slot-scope="scope">{{scope.row.type | formatType}}</template>
         </el-table-column>
-        <el-table-column label="可使用商品" width="100" align="center">
+        <el-table-column label="Available products" width="100" align="center">
           <template slot-scope="scope">{{scope.row.useType | formatUseType}}</template>
         </el-table-column>
-        <el-table-column label="使用门槛" width="140" align="center">
-          <template slot-scope="scope">满{{scope.row.minPoint}}元可用</template>
+        <el-table-column label="Use threshold" width="140" align="center">
+          <template slot-scope="scope">{{scope.row.minPoint}} vnd available</template>
         </el-table-column>
-        <el-table-column label="面值" width="100" align="center">
-          <template slot-scope="scope">{{scope.row.amount}}元</template>
+        <el-table-column label="Face value" width="100" align="center">
+          <template slot-scope="scope">{{scope.row.amount}} vnd</template>
         </el-table-column>
-        <el-table-column label="适用平台" width="100" align="center">
+        <el-table-column label="Applicable platform" width="100" align="center">
           <template slot-scope="scope">{{scope.row.platform | formatPlatform}}</template>
         </el-table-column>
-        <el-table-column label="有效期" width="180" align="center">
-          <template slot-scope="scope">{{scope.row.startTime|formatDate}}至{{scope.row.endTime|formatDate}}</template>
+        <el-table-column label="Expiration date" width="180" align="center">
+          <template slot-scope="scope">{{scope.row.startTime|formatDate}}to{{scope.row.endTime|formatDate}}</template>
         </el-table-column>
-        <el-table-column label="状态" width="100" align="center">
+        <el-table-column label="Status" width="100" align="center">
           <template slot-scope="scope">{{scope.row.endTime | formatStatus}}</template>
         </el-table-column>
-        <el-table-column label="操作" width="180" align="center">
+        <el-table-column label="Operating" width="180" align="center">
           <template slot-scope="scope">
             <el-button size="mini"
                        type="text"
-                       @click="handleView(scope.$index, scope.row)">查看</el-button>
+                       @click="handleView(scope.$index, scope.row)">View</el-button>
             <el-button size="mini"
                        type="text"
                        @click="handleUpdate(scope.$index, scope.row)">
-              编辑</el-button>
+              Update</el-button>
             <el-button size="mini"
                        type="text"
-                       @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                       @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -115,19 +115,19 @@
   };
   const defaultTypeOptions=[
     {
-      label: '全场赠券',
+      label: 'Full coupon',
       value: 0
     },
     {
-      label: '会员赠券',
+      label: 'Member coupon',
       value: 1
     },
     {
-      label: '购物赠券',
+      label: 'Shopping coupon',
       value: 2
     },
     {
-      label: '注册赠券',
+      label: 'Registration coupon',
       value: 3
     }
   ];
@@ -157,20 +157,20 @@
       },
       formatUseType(useType){
         if(useType===0){
-          return '全场通用';
+          return 'General-purpose';
         }else if(useType===1){
-          return '指定分类';
+          return 'Designated category';
         }else{
-          return '指定商品';
+          return 'Designated product';
         }
       },
       formatPlatform(platform){
         if(platform===1){
-          return '移动平台';
+          return 'Mobile platform';
         }else if(platform===2){
-          return 'PC平台';
+          return 'PC platform';
         }else{
-          return '全平台';
+          return 'Full platform';
         }
       },
       formatDate(time){
@@ -184,9 +184,9 @@
         let now = new Date().getTime();
         let endDate = new Date(endTime);
         if(endDate>now){
-          return '未过期'
+          return 'Not expired'
         }else{
-          return '已过期';
+          return 'Expired';
         }
       }
     },
@@ -220,15 +220,15 @@
         this.$router.push({path: '/sms/updateCoupon', query: {id: row.id}})
       },
       handleDelete(index, row) {
-        this.$confirm('是否进行删除操作?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
+        this.$confirm('Whether to delete?', 'prompt', {
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
           deleteCoupon(row.id).then(response=>{
             this.$message({
               type: 'success',
-              message: '删除成功!'
+              message: 'Successfully deleted!'
             });
             this.getList();
           });
